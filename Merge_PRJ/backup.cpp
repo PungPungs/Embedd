@@ -85,7 +85,7 @@ string get_gps(string &buffer, int num) {
 	string line;
 	size_t pos;
 	for (int i = 0; i < num; ++i){
-		pos = buffer.find("\r\n",pos+2);
+		pos = buffer.find("\r\n",pos);
 	}
 
 	if (pos !=  string::npos) {
@@ -141,7 +141,6 @@ int main() {
         FD_ZERO(&read_fds);
         FD_SET(gps_fd,&read_fds);
         FD_SET(motion_fd,&read_fds);
-        FD_SET(sender_fd,&read_fds);
 
         int max_fd = (gps_fd > motion_fd ? gps_fd : motion_fd) + 1;
 
@@ -165,7 +164,6 @@ int main() {
                 gps_line_buffer.append((char*)g_buffer, len);
                 string line = get_gps(gps_line_buffer,3);
                 ssize_t written = write(sender_fd, line.c_str(), line.size());
-				cout << line << endl;
 				if (written < 0) {
 					perror("GPS 시리얼 포트 오류 발생");
 				}
@@ -177,6 +175,9 @@ int main() {
                 motion_line_buffer.append((char*)m_buffer, len);
                 string line = get_gphdt(motion_line_buffer);
                 ssize_t written = write(sender_fd, line.c_str(), line.size());
+				if (written < 0) {
+					perror("TOGS 시리얼 포트 오류 발생");
+				}
             }
         }
 		cout << "running..." << endl;
