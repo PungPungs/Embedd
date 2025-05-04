@@ -1,4 +1,4 @@
-# Embedd_Linux
+# 임베디드 관련 프로젝트
 1. 시리얼 병합 PJT
 
     1. [시리얼 데이터 병합 프로그램 : VSPE + CPP 자체 프로그램](https://github.com/PungPungs/Embedd_Linux/tree/main/Merge_PRJ/1.%20Merge_VSPE_MY_SOFTWARE)
